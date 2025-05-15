@@ -1,0 +1,18 @@
+# permite que a aplicação se comunique com serviços externos ao cluster, 
+# essencial para garantir que a comunicação ocorra de forma controlada e segura.
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: worldtimeapi
+spec:
+  hosts:
+  - worldtimeapi.org
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS
+  location: MESH_EXTERNAL

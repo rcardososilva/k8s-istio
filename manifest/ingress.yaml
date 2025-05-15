@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: my-gateway
+spec:
+  selector:
+    istio: ingress
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+      - "192.168.3.3"
+
+---
+# [PRD]
+# apiVersion: networking.istio.io/v1alpha3
+# kind: Gateway
+# metadata:
+#   name: gateway
+#   namespace: istio-ingress
+# spec:
+#   selector:
+#     istio: ingress
+#   servers:
+#   - port:
+#       number: 80
+#       name: http
+#       protocol: HTTP
+#     hosts:
+#       - domain.com
+#   - port:
+#       number: 443
+#       name: https
+#       protocol: HTTPS
+#     tls:
+#       mode: SIMPLE
+#       credentialName: gateway-certificate-tls
+#     hosts:
+#       - domain.com

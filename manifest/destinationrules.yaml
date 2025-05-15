@@ -1,0 +1,48 @@
+# Criar Destination Rules para gerenciar tráfego e criptografia entre serviços, 
+# tornando-os acessíveis e com conexões seguras.
+# Definir subsets dentro das Destination Rules para diferentes ambientes.
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: frontend
+spec:
+  host: frontend
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+    - name: prod
+      labels:
+        version: prod
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: middleware
+spec:
+  host: middleware
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+    - name: prod
+      labels:
+        version: prod
+    - name: canary
+      labels:
+        version: canary
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: backend
+spec:
+  host: backend
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+    - name: prod
+      labels:
+        version: prod
